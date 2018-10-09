@@ -1,0 +1,665 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wxli.vip.dao.ProductMapper">
+  <resultMap id="BaseResultMap" type="wxli.vip.entity.Product">
+    <id column="ProductId" jdbcType="INTEGER" property="productid" />
+    <result column="ProductName" jdbcType="VARCHAR" property="productname" />
+    <result column="UserId" jdbcType="INTEGER" property="userid" />
+    <result column="CategoryId" jdbcType="INTEGER" property="categoryid" />
+    <result column="ProductUnit" jdbcType="VARCHAR" property="productunit" />
+    <result column="ProductDesc" jdbcType="VARCHAR" property="productdesc" />
+    <result column="ProductParm" jdbcType="VARCHAR" property="productparm" />
+    <result column="ProductStatus" jdbcType="INTEGER" property="productstatus" />
+    <result column="SortValue" jdbcType="INTEGER" property="sortvalue" />
+    <result column="ShowDiscountPrice" jdbcType="INTEGER" property="showdiscountprice" />
+    <result column="RawPrice" jdbcType="DECIMAL" property="rawprice" />
+    <result column="Price" jdbcType="DECIMAL" property="price" />
+    <result column="SalesVolume" jdbcType="INTEGER" property="salesvolume" />
+    <result column="LikesVolume" jdbcType="INTEGER" property="likesvolume" />
+    <result column="IsSoldOut" jdbcType="INTEGER" property="issoldout" />
+    <result column="Stock" jdbcType="INTEGER" property="stock" />
+    <result column="Cover" jdbcType="VARCHAR" property="cover" />
+    <result column="CoverBig" jdbcType="VARCHAR" property="coverbig" />
+    <result column="DataChange_CreateTime" jdbcType="TIMESTAMP" property="datachangeCreatetime" />
+    <result column="DataChange_LastTime" jdbcType="TIMESTAMP" property="datachangeLasttime" />
+    <result column="PreSale" jdbcType="INTEGER" property="presale" />
+    <result column="SearchTag" jdbcType="VARCHAR" property="searchtag" />
+    <result column="HotTag" jdbcType="VARCHAR" property="hottag" />
+    <result column="VideoId" jdbcType="INTEGER" property="videoid" />
+    <result column="LiId" jdbcType="INTEGER" property="liid" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="wxli.vip.entity.ProductWithBLOBs">
+    <result column="RemindTip" jdbcType="LONGVARCHAR" property="remindtip" />
+    <result column="DeliveryTip" jdbcType="LONGVARCHAR" property="deliverytip" />
+    <result column="NoticeTip" jdbcType="LONGVARCHAR" property="noticetip" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ProductId, ProductName, UserId, CategoryId, ProductUnit, ProductDesc, ProductParm, 
+    ProductStatus, SortValue, ShowDiscountPrice, RawPrice, Price, SalesVolume, LikesVolume, 
+    IsSoldOut, Stock, Cover, CoverBig, DataChange_CreateTime, DataChange_LastTime, PreSale, 
+    SearchTag, HotTag, VideoId, LiId
+  </sql>
+  <sql id="Blob_Column_List">
+    RemindTip, DeliveryTip, NoticeTip
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="wxli.vip.entity.ProductExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="wxli.vip.entity.ProductExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from product
+    where ProductId = #{productid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from product
+    where ProductId = #{productid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="wxli.vip.entity.ProductExample">
+    delete from product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="wxli.vip.entity.ProductWithBLOBs">
+    insert into product (ProductId, ProductName, UserId, 
+      CategoryId, ProductUnit, ProductDesc, 
+      ProductParm, ProductStatus, SortValue, 
+      ShowDiscountPrice, RawPrice, Price, 
+      SalesVolume, LikesVolume, IsSoldOut, 
+      Stock, Cover, CoverBig, 
+      DataChange_CreateTime, DataChange_LastTime, 
+      PreSale, SearchTag, HotTag, 
+      VideoId, LiId, RemindTip, 
+      DeliveryTip, NoticeTip)
+    values (#{productid,jdbcType=INTEGER}, #{productname,jdbcType=VARCHAR}, #{userid,jdbcType=INTEGER}, 
+      #{categoryid,jdbcType=INTEGER}, #{productunit,jdbcType=VARCHAR}, #{productdesc,jdbcType=VARCHAR}, 
+      #{productparm,jdbcType=VARCHAR}, #{productstatus,jdbcType=INTEGER}, #{sortvalue,jdbcType=INTEGER}, 
+      #{showdiscountprice,jdbcType=INTEGER}, #{rawprice,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, 
+      #{salesvolume,jdbcType=INTEGER}, #{likesvolume,jdbcType=INTEGER}, #{issoldout,jdbcType=INTEGER}, 
+      #{stock,jdbcType=INTEGER}, #{cover,jdbcType=VARCHAR}, #{coverbig,jdbcType=VARCHAR}, 
+      #{datachangeCreatetime,jdbcType=TIMESTAMP}, #{datachangeLasttime,jdbcType=TIMESTAMP}, 
+      #{presale,jdbcType=INTEGER}, #{searchtag,jdbcType=VARCHAR}, #{hottag,jdbcType=VARCHAR}, 
+      #{videoid,jdbcType=INTEGER}, #{liid,jdbcType=INTEGER}, #{remindtip,jdbcType=LONGVARCHAR}, 
+      #{deliverytip,jdbcType=LONGVARCHAR}, #{noticetip,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="wxli.vip.entity.ProductWithBLOBs">
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productid != null">
+        ProductId,
+      </if>
+      <if test="productname != null">
+        ProductName,
+      </if>
+      <if test="userid != null">
+        UserId,
+      </if>
+      <if test="categoryid != null">
+        CategoryId,
+      </if>
+      <if test="productunit != null">
+        ProductUnit,
+      </if>
+      <if test="productdesc != null">
+        ProductDesc,
+      </if>
+      <if test="productparm != null">
+        ProductParm,
+      </if>
+      <if test="productstatus != null">
+        ProductStatus,
+      </if>
+      <if test="sortvalue != null">
+        SortValue,
+      </if>
+      <if test="showdiscountprice != null">
+        ShowDiscountPrice,
+      </if>
+      <if test="rawprice != null">
+        RawPrice,
+      </if>
+      <if test="price != null">
+        Price,
+      </if>
+      <if test="salesvolume != null">
+        SalesVolume,
+      </if>
+      <if test="likesvolume != null">
+        LikesVolume,
+      </if>
+      <if test="issoldout != null">
+        IsSoldOut,
+      </if>
+      <if test="stock != null">
+        Stock,
+      </if>
+      <if test="cover != null">
+        Cover,
+      </if>
+      <if test="coverbig != null">
+        CoverBig,
+      </if>
+      <if test="datachangeCreatetime != null">
+        DataChange_CreateTime,
+      </if>
+      <if test="datachangeLasttime != null">
+        DataChange_LastTime,
+      </if>
+      <if test="presale != null">
+        PreSale,
+      </if>
+      <if test="searchtag != null">
+        SearchTag,
+      </if>
+      <if test="hottag != null">
+        HotTag,
+      </if>
+      <if test="videoid != null">
+        VideoId,
+      </if>
+      <if test="liid != null">
+        LiId,
+      </if>
+      <if test="remindtip != null">
+        RemindTip,
+      </if>
+      <if test="deliverytip != null">
+        DeliveryTip,
+      </if>
+      <if test="noticetip != null">
+        NoticeTip,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productid != null">
+        #{productid,jdbcType=INTEGER},
+      </if>
+      <if test="productname != null">
+        #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="categoryid != null">
+        #{categoryid,jdbcType=INTEGER},
+      </if>
+      <if test="productunit != null">
+        #{productunit,jdbcType=VARCHAR},
+      </if>
+      <if test="productdesc != null">
+        #{productdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="productparm != null">
+        #{productparm,jdbcType=VARCHAR},
+      </if>
+      <if test="productstatus != null">
+        #{productstatus,jdbcType=INTEGER},
+      </if>
+      <if test="sortvalue != null">
+        #{sortvalue,jdbcType=INTEGER},
+      </if>
+      <if test="showdiscountprice != null">
+        #{showdiscountprice,jdbcType=INTEGER},
+      </if>
+      <if test="rawprice != null">
+        #{rawprice,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="salesvolume != null">
+        #{salesvolume,jdbcType=INTEGER},
+      </if>
+      <if test="likesvolume != null">
+        #{likesvolume,jdbcType=INTEGER},
+      </if>
+      <if test="issoldout != null">
+        #{issoldout,jdbcType=INTEGER},
+      </if>
+      <if test="stock != null">
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="cover != null">
+        #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="coverbig != null">
+        #{coverbig,jdbcType=VARCHAR},
+      </if>
+      <if test="datachangeCreatetime != null">
+        #{datachangeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="datachangeLasttime != null">
+        #{datachangeLasttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="presale != null">
+        #{presale,jdbcType=INTEGER},
+      </if>
+      <if test="searchtag != null">
+        #{searchtag,jdbcType=VARCHAR},
+      </if>
+      <if test="hottag != null">
+        #{hottag,jdbcType=VARCHAR},
+      </if>
+      <if test="videoid != null">
+        #{videoid,jdbcType=INTEGER},
+      </if>
+      <if test="liid != null">
+        #{liid,jdbcType=INTEGER},
+      </if>
+      <if test="remindtip != null">
+        #{remindtip,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="deliverytip != null">
+        #{deliverytip,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="noticetip != null">
+        #{noticetip,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="wxli.vip.entity.ProductExample" resultType="java.lang.Long">
+    select count(*) from product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update product
+    <set>
+      <if test="record.productid != null">
+        ProductId = #{record.productid,jdbcType=INTEGER},
+      </if>
+      <if test="record.productname != null">
+        ProductName = #{record.productname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null">
+        UserId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.categoryid != null">
+        CategoryId = #{record.categoryid,jdbcType=INTEGER},
+      </if>
+      <if test="record.productunit != null">
+        ProductUnit = #{record.productunit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productdesc != null">
+        ProductDesc = #{record.productdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productparm != null">
+        ProductParm = #{record.productparm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productstatus != null">
+        ProductStatus = #{record.productstatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.sortvalue != null">
+        SortValue = #{record.sortvalue,jdbcType=INTEGER},
+      </if>
+      <if test="record.showdiscountprice != null">
+        ShowDiscountPrice = #{record.showdiscountprice,jdbcType=INTEGER},
+      </if>
+      <if test="record.rawprice != null">
+        RawPrice = #{record.rawprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.price != null">
+        Price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.salesvolume != null">
+        SalesVolume = #{record.salesvolume,jdbcType=INTEGER},
+      </if>
+      <if test="record.likesvolume != null">
+        LikesVolume = #{record.likesvolume,jdbcType=INTEGER},
+      </if>
+      <if test="record.issoldout != null">
+        IsSoldOut = #{record.issoldout,jdbcType=INTEGER},
+      </if>
+      <if test="record.stock != null">
+        Stock = #{record.stock,jdbcType=INTEGER},
+      </if>
+      <if test="record.cover != null">
+        Cover = #{record.cover,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coverbig != null">
+        CoverBig = #{record.coverbig,jdbcType=VARCHAR},
+      </if>
+      <if test="record.datachangeCreatetime != null">
+        DataChange_CreateTime = #{record.datachangeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.datachangeLasttime != null">
+        DataChange_LastTime = #{record.datachangeLasttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.presale != null">
+        PreSale = #{record.presale,jdbcType=INTEGER},
+      </if>
+      <if test="record.searchtag != null">
+        SearchTag = #{record.searchtag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hottag != null">
+        HotTag = #{record.hottag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.videoid != null">
+        VideoId = #{record.videoid,jdbcType=INTEGER},
+      </if>
+      <if test="record.liid != null">
+        LiId = #{record.liid,jdbcType=INTEGER},
+      </if>
+      <if test="record.remindtip != null">
+        RemindTip = #{record.remindtip,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.deliverytip != null">
+        DeliveryTip = #{record.deliverytip,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.noticetip != null">
+        NoticeTip = #{record.noticetip,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update product
+    set ProductId = #{record.productid,jdbcType=INTEGER},
+      ProductName = #{record.productname,jdbcType=VARCHAR},
+      UserId = #{record.userid,jdbcType=INTEGER},
+      CategoryId = #{record.categoryid,jdbcType=INTEGER},
+      ProductUnit = #{record.productunit,jdbcType=VARCHAR},
+      ProductDesc = #{record.productdesc,jdbcType=VARCHAR},
+      ProductParm = #{record.productparm,jdbcType=VARCHAR},
+      ProductStatus = #{record.productstatus,jdbcType=INTEGER},
+      SortValue = #{record.sortvalue,jdbcType=INTEGER},
+      ShowDiscountPrice = #{record.showdiscountprice,jdbcType=INTEGER},
+      RawPrice = #{record.rawprice,jdbcType=DECIMAL},
+      Price = #{record.price,jdbcType=DECIMAL},
+      SalesVolume = #{record.salesvolume,jdbcType=INTEGER},
+      LikesVolume = #{record.likesvolume,jdbcType=INTEGER},
+      IsSoldOut = #{record.issoldout,jdbcType=INTEGER},
+      Stock = #{record.stock,jdbcType=INTEGER},
+      Cover = #{record.cover,jdbcType=VARCHAR},
+      CoverBig = #{record.coverbig,jdbcType=VARCHAR},
+      DataChange_CreateTime = #{record.datachangeCreatetime,jdbcType=TIMESTAMP},
+      DataChange_LastTime = #{record.datachangeLasttime,jdbcType=TIMESTAMP},
+      PreSale = #{record.presale,jdbcType=INTEGER},
+      SearchTag = #{record.searchtag,jdbcType=VARCHAR},
+      HotTag = #{record.hottag,jdbcType=VARCHAR},
+      VideoId = #{record.videoid,jdbcType=INTEGER},
+      LiId = #{record.liid,jdbcType=INTEGER},
+      RemindTip = #{record.remindtip,jdbcType=LONGVARCHAR},
+      DeliveryTip = #{record.deliverytip,jdbcType=LONGVARCHAR},
+      NoticeTip = #{record.noticetip,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update product
+    set ProductId = #{record.productid,jdbcType=INTEGER},
+      ProductName = #{record.productname,jdbcType=VARCHAR},
+      UserId = #{record.userid,jdbcType=INTEGER},
+      CategoryId = #{record.categoryid,jdbcType=INTEGER},
+      ProductUnit = #{record.productunit,jdbcType=VARCHAR},
+      ProductDesc = #{record.productdesc,jdbcType=VARCHAR},
+      ProductParm = #{record.productparm,jdbcType=VARCHAR},
+      ProductStatus = #{record.productstatus,jdbcType=INTEGER},
+      SortValue = #{record.sortvalue,jdbcType=INTEGER},
+      ShowDiscountPrice = #{record.showdiscountprice,jdbcType=INTEGER},
+      RawPrice = #{record.rawprice,jdbcType=DECIMAL},
+      Price = #{record.price,jdbcType=DECIMAL},
+      SalesVolume = #{record.salesvolume,jdbcType=INTEGER},
+      LikesVolume = #{record.likesvolume,jdbcType=INTEGER},
+      IsSoldOut = #{record.issoldout,jdbcType=INTEGER},
+      Stock = #{record.stock,jdbcType=INTEGER},
+      Cover = #{record.cover,jdbcType=VARCHAR},
+      CoverBig = #{record.coverbig,jdbcType=VARCHAR},
+      DataChange_CreateTime = #{record.datachangeCreatetime,jdbcType=TIMESTAMP},
+      DataChange_LastTime = #{record.datachangeLasttime,jdbcType=TIMESTAMP},
+      PreSale = #{record.presale,jdbcType=INTEGER},
+      SearchTag = #{record.searchtag,jdbcType=VARCHAR},
+      HotTag = #{record.hottag,jdbcType=VARCHAR},
+      VideoId = #{record.videoid,jdbcType=INTEGER},
+      LiId = #{record.liid,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="wxli.vip.entity.ProductWithBLOBs">
+    update product
+    <set>
+      <if test="productname != null">
+        ProductName = #{productname,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        UserId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="categoryid != null">
+        CategoryId = #{categoryid,jdbcType=INTEGER},
+      </if>
+      <if test="productunit != null">
+        ProductUnit = #{productunit,jdbcType=VARCHAR},
+      </if>
+      <if test="productdesc != null">
+        ProductDesc = #{productdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="productparm != null">
+        ProductParm = #{productparm,jdbcType=VARCHAR},
+      </if>
+      <if test="productstatus != null">
+        ProductStatus = #{productstatus,jdbcType=INTEGER},
+      </if>
+      <if test="sortvalue != null">
+        SortValue = #{sortvalue,jdbcType=INTEGER},
+      </if>
+      <if test="showdiscountprice != null">
+        ShowDiscountPrice = #{showdiscountprice,jdbcType=INTEGER},
+      </if>
+      <if test="rawprice != null">
+        RawPrice = #{rawprice,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        Price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="salesvolume != null">
+        SalesVolume = #{salesvolume,jdbcType=INTEGER},
+      </if>
+      <if test="likesvolume != null">
+        LikesVolume = #{likesvolume,jdbcType=INTEGER},
+      </if>
+      <if test="issoldout != null">
+        IsSoldOut = #{issoldout,jdbcType=INTEGER},
+      </if>
+      <if test="stock != null">
+        Stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="cover != null">
+        Cover = #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="coverbig != null">
+        CoverBig = #{coverbig,jdbcType=VARCHAR},
+      </if>
+      <if test="datachangeCreatetime != null">
+        DataChange_CreateTime = #{datachangeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="datachangeLasttime != null">
+        DataChange_LastTime = #{datachangeLasttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="presale != null">
+        PreSale = #{presale,jdbcType=INTEGER},
+      </if>
+      <if test="searchtag != null">
+        SearchTag = #{searchtag,jdbcType=VARCHAR},
+      </if>
+      <if test="hottag != null">
+        HotTag = #{hottag,jdbcType=VARCHAR},
+      </if>
+      <if test="videoid != null">
+        VideoId = #{videoid,jdbcType=INTEGER},
+      </if>
+      <if test="liid != null">
+        LiId = #{liid,jdbcType=INTEGER},
+      </if>
+      <if test="remindtip != null">
+        RemindTip = #{remindtip,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="deliverytip != null">
+        DeliveryTip = #{deliverytip,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="noticetip != null">
+        NoticeTip = #{noticetip,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ProductId = #{productid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="wxli.vip.entity.ProductWithBLOBs">
+    update product
+    set ProductName = #{productname,jdbcType=VARCHAR},
+      UserId = #{userid,jdbcType=INTEGER},
+      CategoryId = #{categoryid,jdbcType=INTEGER},
+      ProductUnit = #{productunit,jdbcType=VARCHAR},
+      ProductDesc = #{productdesc,jdbcType=VARCHAR},
+      ProductParm = #{productparm,jdbcType=VARCHAR},
+      ProductStatus = #{productstatus,jdbcType=INTEGER},
+      SortValue = #{sortvalue,jdbcType=INTEGER},
+      ShowDiscountPrice = #{showdiscountprice,jdbcType=INTEGER},
+      RawPrice = #{rawprice,jdbcType=DECIMAL},
+      Price = #{price,jdbcType=DECIMAL},
+      SalesVolume = #{salesvolume,jdbcType=INTEGER},
+      LikesVolume = #{likesvolume,jdbcType=INTEGER},
+      IsSoldOut = #{issoldout,jdbcType=INTEGER},
+      Stock = #{stock,jdbcType=INTEGER},
+      Cover = #{cover,jdbcType=VARCHAR},
+      CoverBig = #{coverbig,jdbcType=VARCHAR},
+      DataChange_CreateTime = #{datachangeCreatetime,jdbcType=TIMESTAMP},
+      DataChange_LastTime = #{datachangeLasttime,jdbcType=TIMESTAMP},
+      PreSale = #{presale,jdbcType=INTEGER},
+      SearchTag = #{searchtag,jdbcType=VARCHAR},
+      HotTag = #{hottag,jdbcType=VARCHAR},
+      VideoId = #{videoid,jdbcType=INTEGER},
+      LiId = #{liid,jdbcType=INTEGER},
+      RemindTip = #{remindtip,jdbcType=LONGVARCHAR},
+      DeliveryTip = #{deliverytip,jdbcType=LONGVARCHAR},
+      NoticeTip = #{noticetip,jdbcType=LONGVARCHAR}
+    where ProductId = #{productid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="wxli.vip.entity.Product">
+    update product
+    set ProductName = #{productname,jdbcType=VARCHAR},
+      UserId = #{userid,jdbcType=INTEGER},
+      CategoryId = #{categoryid,jdbcType=INTEGER},
+      ProductUnit = #{productunit,jdbcType=VARCHAR},
+      ProductDesc = #{productdesc,jdbcType=VARCHAR},
+      ProductParm = #{productparm,jdbcType=VARCHAR},
+      ProductStatus = #{productstatus,jdbcType=INTEGER},
+      SortValue = #{sortvalue,jdbcType=INTEGER},
+      ShowDiscountPrice = #{showdiscountprice,jdbcType=INTEGER},
+      RawPrice = #{rawprice,jdbcType=DECIMAL},
+      Price = #{price,jdbcType=DECIMAL},
+      SalesVolume = #{salesvolume,jdbcType=INTEGER},
+      LikesVolume = #{likesvolume,jdbcType=INTEGER},
+      IsSoldOut = #{issoldout,jdbcType=INTEGER},
+      Stock = #{stock,jdbcType=INTEGER},
+      Cover = #{cover,jdbcType=VARCHAR},
+      CoverBig = #{coverbig,jdbcType=VARCHAR},
+      DataChange_CreateTime = #{datachangeCreatetime,jdbcType=TIMESTAMP},
+      DataChange_LastTime = #{datachangeLasttime,jdbcType=TIMESTAMP},
+      PreSale = #{presale,jdbcType=INTEGER},
+      SearchTag = #{searchtag,jdbcType=VARCHAR},
+      HotTag = #{hottag,jdbcType=VARCHAR},
+      VideoId = #{videoid,jdbcType=INTEGER},
+      LiId = #{liid,jdbcType=INTEGER}
+    where ProductId = #{productid,jdbcType=INTEGER}
+  </update>
+</mapper>

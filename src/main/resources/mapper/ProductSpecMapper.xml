@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wxli.vip.dao.ProductSpecMapper">
+  <resultMap id="BaseResultMap" type="wxli.vip.entity.ProductSpec">
+    <id column="SpecId" jdbcType="INTEGER" property="specid" />
+    <id column="ProductId" jdbcType="INTEGER" property="productid" />
+    <result column="ShortTitle" jdbcType="VARCHAR" property="shorttitle" />
+    <result column="LongTitle" jdbcType="VARCHAR" property="longtitle" />
+    <result column="SpecUnit" jdbcType="VARCHAR" property="specunit" />
+    <result column="Status" jdbcType="INTEGER" property="status" />
+    <result column="ShowDiscountPrice" jdbcType="INTEGER" property="showdiscountprice" />
+    <result column="RawPrice" jdbcType="DECIMAL" property="rawprice" />
+    <result column="Price" jdbcType="DECIMAL" property="price" />
+    <result column="TagName" jdbcType="VARCHAR" property="tagname" />
+    <result column="Tag" jdbcType="INTEGER" property="tag" />
+    <result column="SubTitle" jdbcType="VARCHAR" property="subtitle" />
+    <result column="SortValue" jdbcType="INTEGER" property="sortvalue" />
+    <result column="DataChange_CreateTime" jdbcType="TIMESTAMP" property="datachangeCreatetime" />
+    <result column="DataChange_LastTime" jdbcType="TIMESTAMP" property="datachangeLasttime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    SpecId, ProductId, ShortTitle, LongTitle, SpecUnit, Status, ShowDiscountPrice, RawPrice, 
+    Price, TagName, Tag, SubTitle, SortValue, DataChange_CreateTime, DataChange_LastTime
+  </sql>
+  <select id="selectByExample" parameterType="wxli.vip.entity.ProductSpecExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product_spec
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="wxli.vip.entity.ProductSpecKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from product_spec
+    where SpecId = #{specid,jdbcType=INTEGER}
+      and ProductId = #{productid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="wxli.vip.entity.ProductSpecKey">
+    delete from product_spec
+    where SpecId = #{specid,jdbcType=INTEGER}
+      and ProductId = #{productid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="wxli.vip.entity.ProductSpecExample">
+    delete from product_spec
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="wxli.vip.entity.ProductSpec">
+    insert into product_spec (SpecId, ProductId, ShortTitle, 
+      LongTitle, SpecUnit, Status, 
+      ShowDiscountPrice, RawPrice, Price, 
+      TagName, Tag, SubTitle, 
+      SortValue, DataChange_CreateTime, DataChange_LastTime
+      )
+    values (#{specid,jdbcType=INTEGER}, #{productid,jdbcType=INTEGER}, #{shorttitle,jdbcType=VARCHAR}, 
+      #{longtitle,jdbcType=VARCHAR}, #{specunit,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{showdiscountprice,jdbcType=INTEGER}, #{rawprice,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, 
+      #{tagname,jdbcType=VARCHAR}, #{tag,jdbcType=INTEGER}, #{subtitle,jdbcType=VARCHAR}, 
+      #{sortvalue,jdbcType=INTEGER}, #{datachangeCreatetime,jdbcType=TIMESTAMP}, #{datachangeLasttime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="wxli.vip.entity.ProductSpec">
+    insert into product_spec
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="specid != null">
+        SpecId,
+      </if>
+      <if test="productid != null">
+        ProductId,
+      </if>
+      <if test="shorttitle != null">
+        ShortTitle,
+      </if>
+      <if test="longtitle != null">
+        LongTitle,
+      </if>
+      <if test="specunit != null">
+        SpecUnit,
+      </if>
+      <if test="status != null">
+        Status,
+      </if>
+      <if test="showdiscountprice != null">
+        ShowDiscountPrice,
+      </if>
+      <if test="rawprice != null">
+        RawPrice,
+      </if>
+      <if test="price != null">
+        Price,
+      </if>
+      <if test="tagname != null">
+        TagName,
+      </if>
+      <if test="tag != null">
+        Tag,
+      </if>
+      <if test="subtitle != null">
+        SubTitle,
+      </if>
+      <if test="sortvalue != null">
+        SortValue,
+      </if>
+      <if test="datachangeCreatetime != null">
+        DataChange_CreateTime,
+      </if>
+      <if test="datachangeLasttime != null">
+        DataChange_LastTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="specid != null">
+        #{specid,jdbcType=INTEGER},
+      </if>
+      <if test="productid != null">
+        #{productid,jdbcType=INTEGER},
+      </if>
+      <if test="shorttitle != null">
+        #{shorttitle,jdbcType=VARCHAR},
+      </if>
+      <if test="longtitle != null">
+        #{longtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="specunit != null">
+        #{specunit,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="showdiscountprice != null">
+        #{showdiscountprice,jdbcType=INTEGER},
+      </if>
+      <if test="rawprice != null">
+        #{rawprice,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="tagname != null">
+        #{tagname,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null">
+        #{tag,jdbcType=INTEGER},
+      </if>
+      <if test="subtitle != null">
+        #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="sortvalue != null">
+        #{sortvalue,jdbcType=INTEGER},
+      </if>
+      <if test="datachangeCreatetime != null">
+        #{datachangeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="datachangeLasttime != null">
+        #{datachangeLasttime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="wxli.vip.entity.ProductSpecExample" resultType="java.lang.Long">
+    select count(*) from product_spec
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update product_spec
+    <set>
+      <if test="record.specid != null">
+        SpecId = #{record.specid,jdbcType=INTEGER},
+      </if>
+      <if test="record.productid != null">
+        ProductId = #{record.productid,jdbcType=INTEGER},
+      </if>
+      <if test="record.shorttitle != null">
+        ShortTitle = #{record.shorttitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.longtitle != null">
+        LongTitle = #{record.longtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specunit != null">
+        SpecUnit = #{record.specunit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        Status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.showdiscountprice != null">
+        ShowDiscountPrice = #{record.showdiscountprice,jdbcType=INTEGER},
+      </if>
+      <if test="record.rawprice != null">
+        RawPrice = #{record.rawprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.price != null">
+        Price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tagname != null">
+        TagName = #{record.tagname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tag != null">
+        Tag = #{record.tag,jdbcType=INTEGER},
+      </if>
+      <if test="record.subtitle != null">
+        SubTitle = #{record.subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sortvalue != null">
+        SortValue = #{record.sortvalue,jdbcType=INTEGER},
+      </if>
+      <if test="record.datachangeCreatetime != null">
+        DataChange_CreateTime = #{record.datachangeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.datachangeLasttime != null">
+        DataChange_LastTime = #{record.datachangeLasttime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update product_spec
+    set SpecId = #{record.specid,jdbcType=INTEGER},
+      ProductId = #{record.productid,jdbcType=INTEGER},
+      ShortTitle = #{record.shorttitle,jdbcType=VARCHAR},
+      LongTitle = #{record.longtitle,jdbcType=VARCHAR},
+      SpecUnit = #{record.specunit,jdbcType=VARCHAR},
+      Status = #{record.status,jdbcType=INTEGER},
+      ShowDiscountPrice = #{record.showdiscountprice,jdbcType=INTEGER},
+      RawPrice = #{record.rawprice,jdbcType=DECIMAL},
+      Price = #{record.price,jdbcType=DECIMAL},
+      TagName = #{record.tagname,jdbcType=VARCHAR},
+      Tag = #{record.tag,jdbcType=INTEGER},
+      SubTitle = #{record.subtitle,jdbcType=VARCHAR},
+      SortValue = #{record.sortvalue,jdbcType=INTEGER},
+      DataChange_CreateTime = #{record.datachangeCreatetime,jdbcType=TIMESTAMP},
+      DataChange_LastTime = #{record.datachangeLasttime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="wxli.vip.entity.ProductSpec">
+    update product_spec
+    <set>
+      <if test="shorttitle != null">
+        ShortTitle = #{shorttitle,jdbcType=VARCHAR},
+      </if>
+      <if test="longtitle != null">
+        LongTitle = #{longtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="specunit != null">
+        SpecUnit = #{specunit,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        Status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="showdiscountprice != null">
+        ShowDiscountPrice = #{showdiscountprice,jdbcType=INTEGER},
+      </if>
+      <if test="rawprice != null">
+        RawPrice = #{rawprice,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        Price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="tagname != null">
+        TagName = #{tagname,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null">
+        Tag = #{tag,jdbcType=INTEGER},
+      </if>
+      <if test="subtitle != null">
+        SubTitle = #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="sortvalue != null">
+        SortValue = #{sortvalue,jdbcType=INTEGER},
+      </if>
+      <if test="datachangeCreatetime != null">
+        DataChange_CreateTime = #{datachangeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="datachangeLasttime != null">
+        DataChange_LastTime = #{datachangeLasttime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where SpecId = #{specid,jdbcType=INTEGER}
+      and ProductId = #{productid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="wxli.vip.entity.ProductSpec">
+    update product_spec
+    set ShortTitle = #{shorttitle,jdbcType=VARCHAR},
+      LongTitle = #{longtitle,jdbcType=VARCHAR},
+      SpecUnit = #{specunit,jdbcType=VARCHAR},
+      Status = #{status,jdbcType=INTEGER},
+      ShowDiscountPrice = #{showdiscountprice,jdbcType=INTEGER},
+      RawPrice = #{rawprice,jdbcType=DECIMAL},
+      Price = #{price,jdbcType=DECIMAL},
+      TagName = #{tagname,jdbcType=VARCHAR},
+      Tag = #{tag,jdbcType=INTEGER},
+      SubTitle = #{subtitle,jdbcType=VARCHAR},
+      SortValue = #{sortvalue,jdbcType=INTEGER},
+      DataChange_CreateTime = #{datachangeCreatetime,jdbcType=TIMESTAMP},
+      DataChange_LastTime = #{datachangeLasttime,jdbcType=TIMESTAMP}
+    where SpecId = #{specid,jdbcType=INTEGER}
+      and ProductId = #{productid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wxli.vip.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="wxli.vip.entity.User">
+    <id column="UserId" jdbcType="INTEGER" property="userid" />
+    <result column="UserName" jdbcType="VARCHAR" property="username" />
+    <result column="Password" jdbcType="VARCHAR" property="password" />
+    <result column="Avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="Nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="Introduction" jdbcType="VARCHAR" property="introduction" />
+    <result column="Sex" jdbcType="INTEGER" property="sex" />
+    <result column="Cover" jdbcType="VARCHAR" property="cover" />
+    <result column="AreaId" jdbcType="INTEGER" property="areaid" />
+    <result column="ShortDescription" jdbcType="VARCHAR" property="shortdescription" />
+    <result column="UserType" jdbcType="INTEGER" property="usertype" />
+    <result column="Token" jdbcType="VARCHAR" property="token" />
+    <result column="FromSource" jdbcType="INTEGER" property="fromsource" />
+    <result column="LivePower" jdbcType="INTEGER" property="livepower" />
+    <result column="RecordingPower" jdbcType="INTEGER" property="recordingpower" />
+    <result column="MomentAudit" jdbcType="INTEGER" property="momentaudit" />
+    <result column="LiveAudit" jdbcType="INTEGER" property="liveaudit" />
+    <result column="DataChange_CreateTime" jdbcType="TIMESTAMP" property="datachangeCreatetime" />
+    <result column="DataChange_LastTime" jdbcType="TIMESTAMP" property="datachangeLasttime" />
+    <result column="AreaImg" jdbcType="VARCHAR" property="areaimg" />
+    <result column="OperFlag" jdbcType="INTEGER" property="operflag" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    UserId, UserName, Password, Avatar, Nickname, Introduction, Sex, Cover, AreaId, ShortDescription, 
+    UserType, Token, FromSource, LivePower, RecordingPower, MomentAudit, LiveAudit, DataChange_CreateTime, 
+    DataChange_LastTime, AreaImg, OperFlag
+  </sql>
+  <select id="selectByExample" parameterType="wxli.vip.entity.UserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where UserId = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where UserId = #{userid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="wxli.vip.entity.UserExample">
+    delete from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="wxli.vip.entity.User">
+    insert into user (UserId, UserName, Password, 
+      Avatar, Nickname, Introduction, 
+      Sex, Cover, AreaId, 
+      ShortDescription, UserType, Token, 
+      FromSource, LivePower, RecordingPower, 
+      MomentAudit, LiveAudit, DataChange_CreateTime, 
+      DataChange_LastTime, AreaImg, OperFlag
+      )
+    values (#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{avatar,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER}, #{cover,jdbcType=VARCHAR}, #{areaid,jdbcType=INTEGER}, 
+      #{shortdescription,jdbcType=VARCHAR}, #{usertype,jdbcType=INTEGER}, #{token,jdbcType=VARCHAR}, 
+      #{fromsource,jdbcType=INTEGER}, #{livepower,jdbcType=INTEGER}, #{recordingpower,jdbcType=INTEGER}, 
+      #{momentaudit,jdbcType=INTEGER}, #{liveaudit,jdbcType=INTEGER}, #{datachangeCreatetime,jdbcType=TIMESTAMP}, 
+      #{datachangeLasttime,jdbcType=TIMESTAMP}, #{areaimg,jdbcType=VARCHAR}, #{operflag,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="wxli.vip.entity.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        UserId,
+      </if>
+      <if test="username != null">
+        UserName,
+      </if>
+      <if test="password != null">
+        Password,
+      </if>
+      <if test="avatar != null">
+        Avatar,
+      </if>
+      <if test="nickname != null">
+        Nickname,
+      </if>
+      <if test="introduction != null">
+        Introduction,
+      </if>
+      <if test="sex != null">
+        Sex,
+      </if>
+      <if test="cover != null">
+        Cover,
+      </if>
+      <if test="areaid != null">
+        AreaId,
+      </if>
+      <if test="shortdescription != null">
+        ShortDescription,
+      </if>
+      <if test="usertype != null">
+        UserType,
+      </if>
+      <if test="token != null">
+        Token,
+      </if>
+      <if test="fromsource != null">
+        FromSource,
+      </if>
+      <if test="livepower != null">
+        LivePower,
+      </if>
+      <if test="recordingpower != null">
+        RecordingPower,
+      </if>
+      <if test="momentaudit != null">
+        MomentAudit,
+      </if>
+      <if test="liveaudit != null">
+        LiveAudit,
+      </if>
+      <if test="datachangeCreatetime != null">
+        DataChange_CreateTime,
+      </if>
+      <if test="datachangeLasttime != null">
+        DataChange_LastTime,
+      </if>
+      <if test="areaimg != null">
+        AreaImg,
+      </if>
+      <if test="operflag != null">
+        OperFlag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null">
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="cover != null">
+        #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null">
+        #{areaid,jdbcType=INTEGER},
+      </if>
+      <if test="shortdescription != null">
+        #{shortdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="usertype != null">
+        #{usertype,jdbcType=INTEGER},
+      </if>
+      <if test="token != null">
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="fromsource != null">
+        #{fromsource,jdbcType=INTEGER},
+      </if>
+      <if test="livepower != null">
+        #{livepower,jdbcType=INTEGER},
+      </if>
+      <if test="recordingpower != null">
+        #{recordingpower,jdbcType=INTEGER},
+      </if>
+      <if test="momentaudit != null">
+        #{momentaudit,jdbcType=INTEGER},
+      </if>
+      <if test="liveaudit != null">
+        #{liveaudit,jdbcType=INTEGER},
+      </if>
+      <if test="datachangeCreatetime != null">
+        #{datachangeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="datachangeLasttime != null">
+        #{datachangeLasttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="areaimg != null">
+        #{areaimg,jdbcType=VARCHAR},
+      </if>
+      <if test="operflag != null">
+        #{operflag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="wxli.vip.entity.UserExample" resultType="java.lang.Long">
+    select count(*) from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user
+    <set>
+      <if test="record.userid != null">
+        UserId = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null">
+        UserName = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        Password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatar != null">
+        Avatar = #{record.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickname != null">
+        Nickname = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.introduction != null">
+        Introduction = #{record.introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        Sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.cover != null">
+        Cover = #{record.cover,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaid != null">
+        AreaId = #{record.areaid,jdbcType=INTEGER},
+      </if>
+      <if test="record.shortdescription != null">
+        ShortDescription = #{record.shortdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usertype != null">
+        UserType = #{record.usertype,jdbcType=INTEGER},
+      </if>
+      <if test="record.token != null">
+        Token = #{record.token,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromsource != null">
+        FromSource = #{record.fromsource,jdbcType=INTEGER},
+      </if>
+      <if test="record.livepower != null">
+        LivePower = #{record.livepower,jdbcType=INTEGER},
+      </if>
+      <if test="record.recordingpower != null">
+        RecordingPower = #{record.recordingpower,jdbcType=INTEGER},
+      </if>
+      <if test="record.momentaudit != null">
+        MomentAudit = #{record.momentaudit,jdbcType=INTEGER},
+      </if>
+      <if test="record.liveaudit != null">
+        LiveAudit = #{record.liveaudit,jdbcType=INTEGER},
+      </if>
+      <if test="record.datachangeCreatetime != null">
+        DataChange_CreateTime = #{record.datachangeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.datachangeLasttime != null">
+        DataChange_LastTime = #{record.datachangeLasttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.areaimg != null">
+        AreaImg = #{record.areaimg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operflag != null">
+        OperFlag = #{record.operflag,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user
+    set UserId = #{record.userid,jdbcType=INTEGER},
+      UserName = #{record.username,jdbcType=VARCHAR},
+      Password = #{record.password,jdbcType=VARCHAR},
+      Avatar = #{record.avatar,jdbcType=VARCHAR},
+      Nickname = #{record.nickname,jdbcType=VARCHAR},
+      Introduction = #{record.introduction,jdbcType=VARCHAR},
+      Sex = #{record.sex,jdbcType=INTEGER},
+      Cover = #{record.cover,jdbcType=VARCHAR},
+      AreaId = #{record.areaid,jdbcType=INTEGER},
+      ShortDescription = #{record.shortdescription,jdbcType=VARCHAR},
+      UserType = #{record.usertype,jdbcType=INTEGER},
+      Token = #{record.token,jdbcType=VARCHAR},
+      FromSource = #{record.fromsource,jdbcType=INTEGER},
+      LivePower = #{record.livepower,jdbcType=INTEGER},
+      RecordingPower = #{record.recordingpower,jdbcType=INTEGER},
+      MomentAudit = #{record.momentaudit,jdbcType=INTEGER},
+      LiveAudit = #{record.liveaudit,jdbcType=INTEGER},
+      DataChange_CreateTime = #{record.datachangeCreatetime,jdbcType=TIMESTAMP},
+      DataChange_LastTime = #{record.datachangeLasttime,jdbcType=TIMESTAMP},
+      AreaImg = #{record.areaimg,jdbcType=VARCHAR},
+      OperFlag = #{record.operflag,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="wxli.vip.entity.User">
+    update user
+    <set>
+      <if test="username != null">
+        UserName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        Password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        Avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        Nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null">
+        Introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        Sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="cover != null">
+        Cover = #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null">
+        AreaId = #{areaid,jdbcType=INTEGER},
+      </if>
+      <if test="shortdescription != null">
+        ShortDescription = #{shortdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="usertype != null">
+        UserType = #{usertype,jdbcType=INTEGER},
+      </if>
+      <if test="token != null">
+        Token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="fromsource != null">
+        FromSource = #{fromsource,jdbcType=INTEGER},
+      </if>
+      <if test="livepower != null">
+        LivePower = #{livepower,jdbcType=INTEGER},
+      </if>
+      <if test="recordingpower != null">
+        RecordingPower = #{recordingpower,jdbcType=INTEGER},
+      </if>
+      <if test="momentaudit != null">
+        MomentAudit = #{momentaudit,jdbcType=INTEGER},
+      </if>
+      <if test="liveaudit != null">
+        LiveAudit = #{liveaudit,jdbcType=INTEGER},
+      </if>
+      <if test="datachangeCreatetime != null">
+        DataChange_CreateTime = #{datachangeCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="datachangeLasttime != null">
+        DataChange_LastTime = #{datachangeLasttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="areaimg != null">
+        AreaImg = #{areaimg,jdbcType=VARCHAR},
+      </if>
+      <if test="operflag != null">
+        OperFlag = #{operflag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where UserId = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="wxli.vip.entity.User">
+    update user
+    set UserName = #{username,jdbcType=VARCHAR},
+      Password = #{password,jdbcType=VARCHAR},
+      Avatar = #{avatar,jdbcType=VARCHAR},
+      Nickname = #{nickname,jdbcType=VARCHAR},
+      Introduction = #{introduction,jdbcType=VARCHAR},
+      Sex = #{sex,jdbcType=INTEGER},
+      Cover = #{cover,jdbcType=VARCHAR},
+      AreaId = #{areaid,jdbcType=INTEGER},
+      ShortDescription = #{shortdescription,jdbcType=VARCHAR},
+      UserType = #{usertype,jdbcType=INTEGER},
+      Token = #{token,jdbcType=VARCHAR},
+      FromSource = #{fromsource,jdbcType=INTEGER},
+      LivePower = #{livepower,jdbcType=INTEGER},
+      RecordingPower = #{recordingpower,jdbcType=INTEGER},
+      MomentAudit = #{momentaudit,jdbcType=INTEGER},
+      LiveAudit = #{liveaudit,jdbcType=INTEGER},
+      DataChange_CreateTime = #{datachangeCreatetime,jdbcType=TIMESTAMP},
+      DataChange_LastTime = #{datachangeLasttime,jdbcType=TIMESTAMP},
+      AreaImg = #{areaimg,jdbcType=VARCHAR},
+      OperFlag = #{operflag,jdbcType=INTEGER}
+    where UserId = #{userid,jdbcType=INTEGER}
+  </update>
+</mapper>
