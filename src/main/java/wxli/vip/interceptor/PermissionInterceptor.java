@@ -25,10 +25,11 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
         //  null == request.getHeader("x-requested-with") TODO 暂时用这个来判断是否为ajax请求
         // 如果没有权限 则抛403异常 springboot会处理，跳转到 /error/403 页面
         response.sendError(HttpStatus.FORBIDDEN.value(), "无权限");
-        */
+
         response.setHeader("Content-type", "text/html;charset=UTF-8");
         response.getWriter().write("无权限");
-        return false;
+        */
+        return true;
     }
 
 
