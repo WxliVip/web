@@ -27,6 +27,7 @@
 	</properties>
 
 	<dependencies>
+		<!-- springboot 调试使用 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -124,6 +125,7 @@
 
 	<build>
 		<plugins>
+			<!--springboot 调试-->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
